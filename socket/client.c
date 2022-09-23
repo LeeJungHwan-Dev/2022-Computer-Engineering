@@ -70,24 +70,30 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
   server_addr.sin_port        = htons(PORT_NUM);    // Port num to use
   server_addr.sin_addr.s_addr = inet_addr(IP_ADDR); // IP address to use
   connect(server_s, (struct sockaddr *)&server_addr, sizeof(server_addr));
-  
-  // Loop until all messages are typed and sent to server
-  while(1)
-  {
-    // >>> Step #3 <<<
-    // Send to the server
-    // Type the message 
-    gets(out_buf);
-    // Bail out if "quit" is entered
-    if (strcmp(out_buf, "quit") == 0)
-      break;
-    send(server_s, out_buf, (strlen(out_buf) + 1), 0);
+    
+      // Loop until all messages are typed and sent to server
+      while(1)
+      {
+        // >>> Step #3 <<<
+        // Send to the server
+        // Type the message 
+        gets(out_buf);
+        // Bail out if "quit" is entered
+        if (strcmp(out_buf, "quit") == 0)
+          break;
+        send(server_s, out_buf, (strlen(out_buf) + 1), 0);
 
-    // >>> Step #4 <<<
-    // Receive from the server
-    recv(server_s, in_buf, sizeof(in_buf), 0);
-    printf("Received: '%s' \n", in_buf);
-  }
+        // >>> Step #4 <<<
+        // Receive from the server*/
+        recv(server_s, in_buf, sizeof(in_buf), 0);
+          printf("Received: '%s' \n", in_buf);
+        
+        
+      }
+
+  
+  
+
 
   // >>> Step #5 <<<
   // Close all open sockets

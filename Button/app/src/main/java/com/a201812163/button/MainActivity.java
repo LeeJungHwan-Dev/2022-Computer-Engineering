@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        naver = findViewById(R.id.Go_naver);
+     /*  naver = findViewById(R.id.Go_naver);
         phone = findViewById(R.id.Go_phone);
         toast = findViewById(R.id.view_Toast);
 
@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+      */
+
+    }
 
 
 
