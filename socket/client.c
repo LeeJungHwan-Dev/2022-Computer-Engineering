@@ -43,6 +43,8 @@
 //===== Main program ==========================================================
 int main(void) // 에러 코드나와서 void main에서 int main으로 수정함
 {
+
+
 #ifdef WIN
   WORD wVersionRequested = MAKEWORD(1,1);       // Stuff for WSA functions
   WSADATA wsaData;                              // Stuff for WSA functions
@@ -50,8 +52,8 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
 
   unsigned int         server_s;        // Server socket descriptor
   struct sockaddr_in   server_addr;     // Server Internet address
-  char                 out_buf[100];    // 100-byte output buffer for data
-  char                 in_buf[100];     // 100-byte input buffer for data
+  char                 out_buf[4096];    // 100-byte output buffer for data
+  char                 in_buf[4096];     // 100-byte input buffer for data
 
 #ifdef WIN
   // This stuff initializes winsock
@@ -78,10 +80,12 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
         // Send to the server
         // Type the message 
         gets(out_buf);
+        
         // Bail out if "quit" is entered
         if (strcmp(out_buf, "quit") == 0)
           break;
         send(server_s, out_buf, (strlen(out_buf) + 1), 0);
+
 
         // >>> Step #4 <<<
         // Receive from the server*/

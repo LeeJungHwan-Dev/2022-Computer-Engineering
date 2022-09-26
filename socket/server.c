@@ -47,8 +47,8 @@ unsigned int client_sock;
 struct sockaddr_in serverfd; // 소켓 도메인
 struct sockaddr_in clientfd; // 소켓 도메인
 socklen_t client_size;
-char                 out_buf[100]; // 100-byte output buffer for data
-char                 in_buf[100];
+char                 out_buf[4096]; // 100-byte output buffer for data
+char                 in_buf[4096];
 
 
 
@@ -57,17 +57,20 @@ char                 in_buf[100];
 
 int main(void) // 에러 코드나와서 void main에서 int main으로 수정함
 {
+
+
   server_sock = serverfd.sin_family = AF_INET;
   serverfd.sin_addr.s_addr = inet_addr(IP_ADDR);
   serverfd.sin_port = htons(PORT_NUM);
 
 
+
   server_sock = socket(AF_INET,SOCK_STREAM,0);
   bind(server_sock,(struct sockaddr *)&serverfd, sizeof(serverfd));
-  memset(&serverfd,0,sizeof(serverfd));
+  bzero(&serverfd,sizeof(serverfd));
   listen(server_sock,5);
 
-  client_size = sizeof(clientfd);
+  client_size = sizeof(struct sockaddr);
   client_sock = accept(server_sock,(struct sockaddr *)&clientfd,&client_size);
   
   
@@ -82,30 +85,39 @@ while(1)
     // >>> Step #3 <<<
     // Send to the server
     // Type the message 
-    gets(out_buf);
+    //gets(out_buf);
+
+    //gets(out_buf);
+
     // Bail out if "quit" is entered
-    if (strcmp(out_buf, "quit") == 0)
+    if (strcmp(out_buf, "quit") == 0){
       break;
+    }
 
 
+
+    //send(client_sock, out_buf, (strlen(out_buf) + 1), 0);
 
 
     recv(client_sock, in_buf, sizeof(in_buf), 0);
     printf("Received: '%s' \n", in_buf);
-    //puts(in_buf);
 
-    send(client_sock, out_buf, (strlen(out_buf) + 1), 0);
+  
+
     
 
     // >>> Step #4 <<<
-    // Receive from the server
+    // Receive from the server 
     
   }
 
 
 
-  close(server_sock);
   close(client_sock);
+  close(server_sock);
+  
+  
+  
 
 
 
