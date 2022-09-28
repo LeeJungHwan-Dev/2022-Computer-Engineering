@@ -52,8 +52,9 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
 
   unsigned int         server_s;        // Server socket descriptor
   struct sockaddr_in   server_addr;     // Server Internet address
-  char                 out_buf[4096];    // 100-byte output buffer for data
-  char                 in_buf[4096];     // 100-byte input buffer for data
+  char                 out_buf[8192];    // 100-byte output buffer for data
+  char                 in_buf[8192];     // 100-byte input buffer for data
+  char                 hello[] = "hi server";
 
 #ifdef WIN
   // This stuff initializes winsock
@@ -78,19 +79,16 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
       {
         // >>> Step #3 <<<
         // Send to the server
-        // Type the message 
-        gets(out_buf);
-        
-        // Bail out if "quit" is entered
-        if (strcmp(out_buf, "quit") == 0)
-          break;
-        send(server_s, out_buf, (strlen(out_buf) + 1), 0);
+        // Type the message
+
+
+        send(server_s, hello, (strlen(hello) + 1), 0);
 
 
         // >>> Step #4 <<<
         // Receive from the server*/
         recv(server_s, in_buf, sizeof(in_buf), 0);
-          printf("Received: '%s' \n", in_buf);
+        printf("Received: '%s' \n", in_buf);
         
         
       }

@@ -47,8 +47,10 @@ unsigned int client_sock;
 struct sockaddr_in serverfd; // 소켓 도메인
 struct sockaddr_in clientfd; // 소켓 도메인
 socklen_t client_size;
-char                 out_buf[4096]; // 100-byte output buffer for data
-char                 in_buf[4096];
+char                 out_buf[8192]; // 100-byte output buffer for data
+char                 in_buf[8192];
+
+char hello[] = "hi client\n";
 
 
 
@@ -62,6 +64,10 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
   server_sock = serverfd.sin_family = AF_INET;
   serverfd.sin_addr.s_addr = inet_addr(IP_ADDR);
   serverfd.sin_port = htons(PORT_NUM);
+
+
+  int option = 1;
+  setsockopt(server_sock,SOL_SOCKET,SO_REUSEADDR,&option,sizeof(option));
 
 
 
@@ -85,18 +91,9 @@ while(1)
     // >>> Step #3 <<<
     // Send to the server
     // Type the message 
-    //gets(out_buf);
-
-    //gets(out_buf);
-
-    // Bail out if "quit" is entered
-    if (strcmp(out_buf, "quit") == 0){
-      break;
-    }
 
 
-
-    //send(client_sock, out_buf, (strlen(out_buf) + 1), 0);
+    send(client_sock, hello, (strlen(hello) + 1), 0);
 
 
     recv(client_sock, in_buf, sizeof(in_buf), 0);
