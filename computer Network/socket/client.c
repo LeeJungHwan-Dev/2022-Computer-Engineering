@@ -54,7 +54,6 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
   struct sockaddr_in   server_addr;     // Server Internet address
   char                 out_buf[8192];    // 100-byte output buffer for data
   char                 in_buf[8192];     // 100-byte input buffer for data
-  char                 hello[] = "hi server";
 
 #ifdef WIN
   // This stuff initializes winsock
@@ -82,7 +81,8 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
         // Type the message
 
 
-        send(server_s, hello, (strlen(hello) + 1), 0);
+        gets(out_buf);
+        send(server_s, out_buf, (strlen(out_buf) + 1), 0);
 
 
         // >>> Step #4 <<<

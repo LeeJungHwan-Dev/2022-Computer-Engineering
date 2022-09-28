@@ -50,8 +50,6 @@ socklen_t client_size;
 char                 out_buf[8192]; // 100-byte output buffer for data
 char                 in_buf[8192];
 
-char hello[] = "hi client\n";
-
 
 
 
@@ -60,6 +58,7 @@ char hello[] = "hi client\n";
 int main(void) // 에러 코드나와서 void main에서 int main으로 수정함
 {
 
+  printf("실행됨!!\n");
 
   server_sock = serverfd.sin_family = AF_INET;
   serverfd.sin_addr.s_addr = inet_addr(IP_ADDR);
@@ -93,11 +92,13 @@ while(1)
     // Type the message 
 
 
-    send(client_sock, hello, (strlen(hello) + 1), 0);
-
 
     recv(client_sock, in_buf, sizeof(in_buf), 0);
     printf("Received: '%s' \n", in_buf);
+
+
+    gets(in_buf);
+    send(client_sock, in_buf, (strlen(in_buf) + 1), 0);
 
   
 
