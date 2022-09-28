@@ -18,6 +18,7 @@
 //=  History:  ZG (08/06/01) - Genesis - from client.c by KJC                 =
 //=                                                                           =
 //=============================================================================
+#include <unistd.h>
 #define  BSD                // WIN for Winsock and BSD for BSD sockets
 
 //----- Include files ---------------------------------------------------------
@@ -33,51 +34,45 @@
   #include <arpa/inet.h>    // Needed for inet_ntoa()
   #include <fcntl.h>
   #include <netdb.h>
-  #include <unistd.h> // 오류 해결을 위해 추가함
 #endif
 
 //----- Defines ---------------------------------------------------------------
 #define  PORT_NUM         1050     // Port number used at the server
-#define  IP_ADDR "127.0.0.1"       // IP address of server (*** HARDWIRED ***)
+#define  IP_ADDR "65.34.90.187" // IP address of server (*** HARDWIRED ***)
 
 //===== Main program ==========================================================
-
-unsigned int server_sock;
-unsigned int client_sock;
-struct sockaddr_in serverfd; // 소켓 도메인
-struct sockaddr_in clientfd; // 소켓 도메인
-socklen_t client_size;
-char                 out_buf[100]; // 100-byte output buffer for data
-char                 in_buf[100];
-
-
-
-
-
-
-int main(void) // 에러 코드나와서 void main에서 int main으로 수정함
+int main()
 {
-  server_sock = serverfd.sin_family = AF_INET;
-  serverfd.sin_addr.s_addr = inet_addr(IP_ADDR);
-  serverfd.sin_port = htons(PORT_NUM);
+#ifdef WIN
+  WORD wVersionRequested = MAKEWORD(1,1);       // Stuff for WSA functions
+  WSADATA wsaData;                              // Stuff for WSA functions
+#endif
 
+  unsigned int         server_s;        // Server socket descriptor
+  struct sockaddr_in   server_addr;     // Server Internet address
+  char                 out_buf[100];    // 100-byte output buffer for data
+  char                 in_buf[100];     // 100-byte input buffer for data
 
-  server_sock = socket(AF_INET,SOCK_STREAM,0);
-  bind(server_sock,(struct sockaddr *)&serverfd, sizeof(serverfd));
-  memset(&serverfd,0,sizeof(serverfd));
-  listen(server_sock,5);
+#ifdef WIN
+  // This stuff initializes winsock
+  WSAStartup(wVersionRequested, &wsaData);
+#endif
 
-  client_size = sizeof(clientfd);
-  client_sock = accept(server_sock,(struct sockaddr *)&clientfd,&client_size);
+  // >>> Step #1 <<<
+  // Create a socket
+  //   - AF_INET is Address Family Internet and SOCK_STREAM is streams
+  server_s = socket(AF_INET, SOCK_STREAM, 0);
+
+  // >>> Step #2 <<<
+  // Fill-in the server socket's address information and do a connect with
+  // the listening server.  The connect() will block.
+  server_addr.sin_family      = AF_INET;            // Address family to use
+  server_addr.sin_port        = htons(PORT_NUM);    // Port num to use
+  server_addr.sin_addr.s_addr = inet_addr(IP_ADDR); // IP address to use
+  connect(server_s, (struct sockaddr *)&server_addr, sizeof(server_addr));
   
-  
-  if( client_sock != -1){
-    printf("연결 성공!\n");
-  }
-
-
-
-while(1)
+  // Loop until all messages are typed and sent to server
+  while(1)
   {
     // >>> Step #3 <<<
     // Send to the server
@@ -86,29 +81,25 @@ while(1)
     // Bail out if "quit" is entered
     if (strcmp(out_buf, "quit") == 0)
       break;
-
-
-
-
-    recv(client_sock, in_buf, sizeof(in_buf), 0);
-    printf("Received: '%s' \n", in_buf);
-    //puts(in_buf);
-
-    send(client_sock, out_buf, (strlen(out_buf) + 1), 0);
-    
+    send(server_s, out_buf, (strlen(out_buf) + 1), 0);
 
     // >>> Step #4 <<<
     // Receive from the server
-    
+    recv(server_s, in_buf, sizeof(in_buf), 0);
+    printf("Received: '%s' \n", in_buf);
   }
 
+  // >>> Step #5 <<<
+  // Close all open sockets
+#ifdef WIN
+  closesocket(server_s);
+#endif
+#ifdef BSD
+  close(server_s);
+#endif
 
-
-  close(server_sock);
-  close(client_sock);
-
-
-
-
-
+#ifdef WIN
+  // This stuff cleans-up winsock
+  WSACleanup();
+#endif
 }
