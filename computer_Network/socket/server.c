@@ -74,6 +74,15 @@ int main(void) // 에러 코드나와서 void main에서 int main으로 수정�
   //sin_port는 포트 정보를 저장하는 값 입니다.
 
 
+    /**
+   * inet_addr() ? htons() ?
+   * 
+   * inet_addr는 흔히 문자열로 이루워져있는 IP주소 값을 32비트 빅엔디안 방식으로 변환해준다.
+   * htons는 short형 데이터로 입력한 포트를 네트워크 바이트로 전환해준다.
+   * 
+   */
+
+
   server_sock = socket(AF_INET,SOCK_STREAM,0);
 
   /**
