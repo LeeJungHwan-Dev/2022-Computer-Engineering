@@ -21,6 +21,7 @@
 >> * Screen, Screen2 : 안드로이드 화면 회전 처리 예제 파일 입니다.
 >> * dialog : 안드로이드 dialog 예제 파일 입니다.
 >> * progressbar : 안드로이드 progressbar 예제 파일 입니다.
+>> * inflation : 안드로읻 inflater를 사용하여 간단한 View 제어 동작 예제 입니다.
 
 </br>
 </br>
