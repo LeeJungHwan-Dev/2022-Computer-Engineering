@@ -24,7 +24,7 @@
 >> * progressbar : 안드로이드 progressbar 예제 파일 입니다.
 >> * inflation : 안드로이드 inflater를 사용하여 간단한 View 제어 동작 예제 입니다.
 >> * intent_Example : 안드로이드 Intent를 사용하 화면 전환 및 데이터 전달 예제 입니다.
->> * App_start_pref : 안드로이드에서 간단한 Action 처리 및 pref 저장 예제 입니다.
+>> * App_start_pref : 안드로이드 pref 저장 예제 입니다.
 
 </br>
 </br>
