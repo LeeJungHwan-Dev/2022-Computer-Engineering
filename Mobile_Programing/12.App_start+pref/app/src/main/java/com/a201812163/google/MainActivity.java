@@ -30,11 +30,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /*Intent intent = new Intent();
-                ComponentName componentName = new ComponentName("com.history.hatda","com.history.hatda.MainActivity");
+                ComponentName componentName = new ComponentName("com.nhn.android.search","com.nhn.android.search.Main");
                 intent.setComponent(componentName);
                 startActivity(intent);*/
 
-                loadState();
+                // 실행 방법 1
+
+                // 실행 방법 2
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.nhn.android.search");
+                startActivity(intent);
+
+
+                //loadState();
 
             }
         });
