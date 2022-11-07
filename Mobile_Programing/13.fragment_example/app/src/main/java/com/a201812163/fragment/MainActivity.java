@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    public String string = "";
     First_BlankFragment frm;
     Second_BlankFragment srm;
 

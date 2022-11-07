@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,11 +67,13 @@ public class First_BlankFragment extends Fragment {
         Button go_second = rootView.findViewById(R.id.btn1);
 
 
+        EditText editText = rootView.findViewById(R.id.edit_text);
 
         go_second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.string = editText.getText().toString();
                 mainActivity.onFragmentChange(0);
 
             }

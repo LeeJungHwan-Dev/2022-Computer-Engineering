@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,8 +63,12 @@ public class Second_BlankFragment extends Fragment {
 
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_second__blank, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        TextView textView = rootView.findViewById(R.id.sec_textview);
         Button go_second = rootView.findViewById(R.id.btn2);
 
+        textView.setText(mainActivity.string);
 
 
         go_second.setOnClickListener(new View.OnClickListener() {
