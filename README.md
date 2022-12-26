@@ -1,6 +1,6 @@
 # 2022-Computer-Engineering
 
-#### Start : 2022 / 09 / 01 ~ ing
+#### Start : 2022 / 09 / 01 ~ End :2022 / 12 / 21
 #### OS : macOS Monterey 12.6
 #### IDE : Android Studio 2021.2.1 Patch 2
 
